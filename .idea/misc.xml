@@ -13,6 +13,8 @@
         <option value="$PROJECT_DIR$/os-management-microservice/pom.xml" />
         <option value="$USER_HOME$/Downloads/authentication-microservice/authentication-microservice/pom.xml" />
         <option value="$PROJECT_DIR$/authentication-microservice/pom.xml" />
+        <option value="$PROJECT_DIR$/discovery-microservice/pom.xml" />
+        <option value="$PROJECT_DIR$/server-config/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

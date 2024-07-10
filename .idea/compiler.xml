@@ -11,6 +11,8 @@
         <module name="os-management-microservice" />
         <module name="technician-microservice" />
         <module name="authentication-microservice" />
+        <module name="discovery-microservice" />
+        <module name="server-config" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -21,7 +23,9 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="authentication-microservice" options="-parameters" />
       <module name="customer-microservice" options="-parameters" />
+      <module name="discovery-microservice" options="-parameters" />
       <module name="os-management-microservice" options="-parameters" />
+      <module name="server-config" options="-parameters" />
       <module name="technician-microservice" options="-parameters" />
     </option>
   </component>
