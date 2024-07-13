@@ -18,27 +18,27 @@ public class OrderService {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "os_id")
+    @Column(name = "os_id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "os_creation_date")
+    @Column(name = "os_creation_date", nullable = false, updatable = false)
     private LocalDate creationDate;
 
-    @Column(name = "os_closure_date")
+    @Column(name = "os_closure_date", nullable = false, updatable = false)
     private LocalDate closureDate;
 
-    @Column(name = "customer_id")
+    @Column(name = "customer_id", nullable = false)
     private Long customerId;
 
-    @Column(name = "technician_id")
+    @Column(name = "technician_id", nullable = false)
     private Long technicianId;
 
-    @Column(name = "job_description")
+    @Column(name = "job_description", nullable = false)
     private String jobDescription;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private Double price;
 
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private Character status;
 }

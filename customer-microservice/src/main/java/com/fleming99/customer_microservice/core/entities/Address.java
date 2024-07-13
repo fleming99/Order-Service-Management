@@ -16,25 +16,25 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "address_id")
+    @Column(name = "address_id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "street")
+    @Column(name = "street", nullable = false, length = 100)
     private String street;
 
-    @Column(name = "neighborhood")
+    @Column(name = "neighborhood", nullable = false, length = 100)
     private String neighborhood;
 
-    @Column(name = "house_number")
+    @Column(name = "house_number", nullable = false, length = 100)
     private String houseNumber;
 
-    @Column(name = "city")
+    @Column(name = "city", nullable = false, length = 100)
     private String city;
 
-    @Column(name = "state")
+    @Column(name = "state", nullable = false, length = 100)
     private String state;
 
-    @Column(name = "country")
+    @Column(name = "country", nullable = false, length = 100)
     private String country;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)

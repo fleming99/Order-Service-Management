@@ -13,6 +13,7 @@
         <module name="authentication-microservice" />
         <module name="discovery-microservice" />
         <module name="server-config" />
+        <module name="gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -24,6 +25,7 @@
       <module name="authentication-microservice" options="-parameters" />
       <module name="customer-microservice" options="-parameters" />
       <module name="discovery-microservice" options="-parameters" />
+      <module name="gateway" options="-parameters" />
       <module name="os-management-microservice" options="-parameters" />
       <module name="server-config" options="-parameters" />
       <module name="technician-microservice" options="-parameters" />
