@@ -6,8 +6,11 @@ import com.fleming99.customer_microservice.core.dto.CustomerResponse;
 import com.fleming99.customer_microservice.core.entities.Customer;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CustomerService {
+
+    List<Customer> getCustomersList();
 
     List<CustomerResponse> getCustomersResponseList();
 

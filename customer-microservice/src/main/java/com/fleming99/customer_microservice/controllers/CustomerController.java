@@ -4,8 +4,10 @@ import com.fleming99.customer_microservice.application.CustomerServiceImpl;
 import com.fleming99.customer_microservice.core.dto.CreateCustomerRequest;
 import com.fleming99.customer_microservice.core.dto.CustomerRequest;
 import com.fleming99.customer_microservice.core.dto.CustomerResponse;
+import com.fleming99.customer_microservice.core.entities.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
