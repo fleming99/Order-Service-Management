@@ -1,14 +1,13 @@
-package com.fleming99.customer_microservice;
+package com.fleming99.gateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CustomerMicroserviceApplicationTests {
+class GatewayApplicationTests {
 
 	@Test
 	void contextLoads() {
-
 	}
 
 }

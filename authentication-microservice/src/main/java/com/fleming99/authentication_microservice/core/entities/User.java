@@ -1,6 +1,7 @@
 package com.fleming99.authentication_microservice.core.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,13 +24,14 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false, updatable = false)
     private Long userId;
 
-    @Column(name = "user_email", nullable = false)
+    @Column(name = "user_email", nullable = false, unique = true, length = 150)
+    @Email(message = "Invalid e-mail format")
     private String email;
 
-    @Column(name = "user_password", nullable = false)
+    @Column(name = "user_password", nullable = false, length = 68)
     private String password;
 
     @Enumerated(EnumType.STRING)

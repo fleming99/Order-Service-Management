@@ -1,14 +1,11 @@
 package com.fleming99.customer_microservice.core.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
+@Data
 @Builder
 @AllArgsConstructor
 public class CreateCustomerRequest {
@@ -17,7 +14,7 @@ public class CreateCustomerRequest {
 
     private String lastName;
 
-    private String birthDate;
+    private LocalDate birthDate;
 
     private String email;
 

@@ -13,6 +13,8 @@ import com.fleming99.customer_microservice.core.exceptions.CustomerNotFound;
 import com.fleming99.customer_microservice.core.usecases.CustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +32,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final AddressRepository addressRepository;
 
+
+    @Override
+    public List<Customer> getCustomersList() {
+        return customerRepository.findAll();
+    }
+
     @Override
     public List<CustomerResponse> getCustomersResponseList() {
 
@@ -40,7 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .toList();
     }
 
-    private CustomerResponse mapCustomerToCustomerResponse(Customer customer) {
+    public CustomerResponse mapCustomerToCustomerResponse(Customer customer) {
 
         return CustomerResponse.builder()
                 .id(customer.getId())
@@ -77,11 +85,17 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional
     public void createCustomer(CreateCustomerRequest createCustomerRequest) {
 
+        Optional<Customer> checkCustomer = customerRepository.findByEmail(createCustomerRequest.getEmail());
+
+        if (checkCustomer.isPresent()){
+            throw new CouldNotCreateCustomer("Customer already exist with given email" + createCustomerRequest.getEmail());
+        }
+
         try{
             Customer customer = Customer.builder()
                     .firstName(createCustomerRequest.getFirstName())
                     .lastName(createCustomerRequest.getLastName())
-                    .birthDate(LocalDate.parse(createCustomerRequest.getBirthDate()))
+                    .birthDate(createCustomerRequest.getBirthDate())
                     .regDate(LocalDate.now())
                     .email(createCustomerRequest.getEmail())
                     .password(createCustomerRequest.getPassword())
@@ -112,11 +126,10 @@ public class CustomerServiceImpl implements CustomerService {
     public void updateCustomer(Long id, CreateCustomerRequest createCustomerRequest) {
 
         try {
-            Customer customer = getCustomerById(id);
-
+            Customer customer = customerRepository.findById(id).get();
             customer.setFirstName(createCustomerRequest.getFirstName());
             customer.setLastName(createCustomerRequest.getLastName());
-            customer.setBirthDate(LocalDate.parse(createCustomerRequest.getBirthDate()));
+            customer.setBirthDate(createCustomerRequest.getBirthDate());
             customer.setEmail(createCustomerRequest.getEmail());
             customer.setPassword(createCustomerRequest.getPassword());
 
@@ -153,6 +166,6 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public void deleteCustomer(CustomerRequest customerRequest) {
-        customerRepository.delete(customerRepository.getCustomerByEmail(customerRequest.getEmail()));
+        customerRepository.delete(customerRepository.findByEmail(customerRequest.getEmail()).get());
     }
 }
