@@ -8,11 +8,11 @@ import lombok.*;
 @Builder
 public class TechnicianResponse {
 
+    private Long id;
+
     private String firstName;
 
     private String lastName;
-
-    private String cpf;
 
     private String email;
 }

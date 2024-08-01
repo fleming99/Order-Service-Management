@@ -12,7 +12,5 @@ public class TechnicianRequest {
 
     private String lastName;
 
-    private String cpf;
-
     private String email;
 }

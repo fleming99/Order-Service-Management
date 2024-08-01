@@ -2,10 +2,12 @@ package com.fleming99.technician_microservice.controllers;
 
 import com.fleming99.technician_microservice.application.TechnicianServiceImpl;
 import com.fleming99.technician_microservice.core.dto.CreateTechnicianRequest;
-import com.fleming99.technician_microservice.core.dto.TechnicianRequest;
 import com.fleming99.technician_microservice.core.dto.TechnicianResponse;
+import com.fleming99.technician_microservice.core.dto.UpdateTechnicianRequest;
+import com.fleming99.technician_microservice.core.entities.Technician;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,25 +37,13 @@ public class TechnicianController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createTechnician(@RequestBody CreateTechnicianRequest createTechnicianRequest){
-        technicianService.createTechnician(createTechnicianRequest);
+    public Technician createTechnician(@RequestBody CreateTechnicianRequest createTechnicianRequest){
+        return technicianService.createTechnician(createTechnicianRequest);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateTechnician(@PathVariable Long id, @RequestBody CreateTechnicianRequest createTechnicianRequest){
-        technicianService.updateTechnician(id, createTechnicianRequest);
-    }
-
-    @DeleteMapping
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteTechnician(@RequestBody TechnicianRequest technicianRequest){
-        technicianService.deleteTechnician(technicianRequest);
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteTechnicianById(@PathVariable Long id){
-        technicianService.deleteTechnicianById(id);
+    public Technician updateTechnician(@PathVariable Long id, @RequestBody UpdateTechnicianRequest technicianRequest){
+        return technicianService.updateTechnician(id, technicianRequest);
     }
 }

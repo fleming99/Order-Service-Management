@@ -1,7 +1,9 @@
 package com.fleming99.technician_microservice.core.dto;
 
-import lombok.*;
-import org.springframework.cglib.core.Local;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
@@ -9,7 +11,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @Builder
-public class CreateTechnicianRequest {
+public class UpdateTechnicianRequest {
 
     private String firstName;
 
@@ -22,6 +24,8 @@ public class CreateTechnicianRequest {
     private String rg;
 
     private LocalDate admissionDate;
+
+    private LocalDate resignationDate;
 
     private String email;
 
