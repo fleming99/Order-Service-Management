@@ -36,13 +36,22 @@ public class Technician {
     @CPF(message = "Invalid CPF format.")
     private String cpf;
 
+    @Column(name = "technician_rg", nullable = false, unique = true, length = 12)
+    private String rg;
+
     @Column(name = "technician_reg_date", nullable = false, updatable = false)
     private LocalDate regDate;
+
+    @Column(name = "technician_admission_date", nullable = false)
+    private LocalDate admissionDate;
+
+    @Column(name = "technician_resignation_date")
+    private LocalDate resignationDate;
+
+    @Column(name = "technician_status", nullable = false)
+    private char status;
 
     @Column(name = "technician_email", nullable = false, unique = true, length = 100)
     @Email(message = "Invalid e-mail format.")
     private String email;
-
-    @Column(name = "technician_password", nullable = false, length = 68)
-    private String password;
 }

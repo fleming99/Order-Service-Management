@@ -2,13 +2,14 @@ package com.fleming99.technician_microservice.application;
 
 import com.fleming99.technician_microservice.adapters.TechnicianRepository;
 import com.fleming99.technician_microservice.core.dto.CreateTechnicianRequest;
-import com.fleming99.technician_microservice.core.dto.TechnicianRequest;
 import com.fleming99.technician_microservice.core.dto.TechnicianResponse;
+import com.fleming99.technician_microservice.core.dto.UpdateTechnicianRequest;
 import com.fleming99.technician_microservice.core.entities.Technician;
 import com.fleming99.technician_microservice.core.usecases.TechnicianUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,9 +46,9 @@ public class TechnicianServiceImpl implements TechnicianUseCase {
     private TechnicianResponse mapTechnicianToTechnicianResponse(Technician technician) {
 
         return TechnicianResponse.builder()
+                .id(technician.getId())
                 .firstName(technician.getFirstName())
                 .lastName(technician.getLastName())
-                .cpf(technician.getCpf())
                 .email(technician.getEmail())
                 .build();
     }
@@ -77,67 +78,52 @@ public class TechnicianServiceImpl implements TechnicianUseCase {
     }
 
     @Override
-    @Transactional
-    public void createTechnician(CreateTechnicianRequest technicianRequest) {
+    public Technician createTechnician(CreateTechnicianRequest technicianRequest) {
 
         try {
             Technician technician = Technician.builder()
                     .firstName(technicianRequest.getFirstName())
                     .lastName(technicianRequest.getLastName())
-                    .birthDate(LocalDate.parse(technicianRequest.getBirthDate()))
+                    .birthDate(technicianRequest.getBirthDate())
                     .cpf(technicianRequest.getCpf())
+                    .rg(technicianRequest.getRg())
                     .regDate(LocalDate.now())
+                    .admissionDate(technicianRequest.getAdmissionDate())
+                    .status('A')
                     .email(technicianRequest.getEmail())
-                    .password(technicianRequest.getPassword())
                     .build();
 
-            technicianRepository.save(technician);
-            log.info("Technician {} saved successfully", technician.getId());
+
+            log.info("Trying to create the Technician: {}", technician.getId());
+            return technicianRepository.save(technician);
         }catch (NullPointerException e){
             throw new RuntimeException(e.getMessage(), e.getCause());
         }
     }
 
     @Override
-    @Transactional
-    public void updateTechnician(Long id, CreateTechnicianRequest technicianRequest) {
+    public Technician updateTechnician(Long id, UpdateTechnicianRequest technicianRequest) {
 
         try {
             Technician technician = getTechnicianById(id);
             technician.setFirstName(technicianRequest.getFirstName());
             technician.setLastName(technicianRequest.getLastName());
-            technician.setBirthDate(LocalDate.parse(technicianRequest.getBirthDate()));
+            technician.setBirthDate(technicianRequest.getBirthDate());
             technician.setCpf(technicianRequest.getCpf());
+            technician.setRg(technicianRequest.getRg());
+            technician.setAdmissionDate(technicianRequest.getAdmissionDate());
+            technician.setResignationDate(technicianRequest.getResignationDate());
             technician.setEmail(technicianRequest.getEmail());
-            technician.setPassword(technicianRequest.getPassword());
 
-            technicianRepository.save(technician);
-            log.info("Technician {} updated successfully", technician.getId());
+            if (technician.getResignationDate() != null){
+                technician.setStatus('D');
+            }else{
+                technician.setStatus('A');
+            }
+
+            log.info("Trying to update the Technician: {}", technician.getId());
+            return technicianRepository.save(technician);
         }catch (NullPointerException e){
-            throw new RuntimeException(e.getMessage(), e.getCause());
-        }
-    }
-
-    @Override
-    @Transactional
-    public void deleteTechnicianById(Long id) {
-
-        try {
-            technicianRepository.deleteById(id);
-            log.info("Technician {} deleted successfully", id);
-        }catch (Exception e){
-            throw new RuntimeException(e.getMessage(), e.getCause());
-        }
-    }
-
-    @Override
-    @Transactional
-    public void deleteTechnician(TechnicianRequest technicianRequest) {
-
-        try {
-            technicianRepository.delete(technicianRepository.getTechnicianByEmail(technicianRequest.getEmail()));
-            log.info("Technician {} deleted successfully", technicianRequest.getFirstName() + technicianRequest.getLastName());
-        }catch (Exception e){
             throw new RuntimeException(e.getMessage(), e.getCause());
         }
     }
